@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -17,10 +18,17 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
+            loader: 'thread-loader',
+          },
+          {
             loader: 'babel-loader',
           },
           {
             loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              happyPackMode: true,
+            },
           },
         ],
       },
@@ -37,6 +45,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   devServer: {
     static: {

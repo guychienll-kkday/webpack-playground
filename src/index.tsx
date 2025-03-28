@@ -9,7 +9,7 @@ const getWelcomeWording = (topic: string) => {
 };
 
 const App = () => {
-  return <h1 className="welcome-heading">{getWelcomeWording(topic)}</h1>
+  return <h1 className="welcome-heading">{getWelcomeWording(topic)}</h1>;
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
