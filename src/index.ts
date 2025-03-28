@@ -1,6 +1,6 @@
 const topic = 'chill chill frontend @ rezio';
 
-const sayHello = (topic) => {
+const sayHello = (topic: string) => {
   console.log(`Hello ${topic}`);
 };
 

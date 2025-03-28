@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: path.resolve(__dirname, 'src/index.js'),
+  entry: path.resolve(__dirname, 'src/index.ts'),
   devtool: 'source-map',
   output: {
     filename: 'bundle.js',
@@ -10,9 +10,22 @@ module.exports = {
     clean: true,
   },
   module: {
-    rules: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }],
+    rules: [
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: 'ts-loader',
+          },
+        ],
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.ts'],
   },
 };
