@@ -1,11 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
-module.exports = {
-  mode: 'development',
+const commonConfig = {
   entry: path.resolve(__dirname, 'src/index.tsx'),
-  devtool: 'source-map',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -47,6 +46,12 @@ module.exports = {
     }),
     new ForkTsCheckerWebpackPlugin(),
   ],
+};
+
+const developmentConfig = {
+  ...commonConfig,
+  mode: 'development',
+  devtool: 'source-map',
   devServer: {
     static: {
       directory: path.resolve(__dirname, 'dist'),
@@ -54,4 +59,21 @@ module.exports = {
     port: 3000,
     open: true,
   },
+};
+
+const productionConfig = {
+  ...commonConfig,
+  mode: 'production',
+  devtool: 'hidden-source-map',
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode === 'production') {
+    return productionConfig;
+  }
+  return developmentConfig;
 };
