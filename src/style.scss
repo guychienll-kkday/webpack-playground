@@ -1,0 +1,9 @@
+.box {
+  color: #005abe;
+}
+
+@media screen and (width > 1200px) {
+  .box {
+    color: green;
+  }
+}
